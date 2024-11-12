@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Web Text Editor</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .editor-container {
+      width: 80%;
+      max-width: 800px;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .toolbar {
+      display: flex;
+      background-color: #f4f4f9;
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    .toolbar button {
+      background: none;
+      border: none;
+      padding: 8px;
+      margin: 0 4px;
+      cursor: pointer;
+      font-size: 16px;
+      color: #333;
+    }
+    .toolbar button:hover {
+      color: #007bff;
+    }
+    .editor {
+      min-height: 400px;
+      padding: 20px;
+      font-size: 16px;
+      border: none;
+      outline: none;
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="editor-container">
+  <div class="toolbar">
+    <button onclick="execCmd('bold')"><b>B</b></button>
+    <button onclick="execCmd('italic')"><i>I</i></button>
+    <button onclick="execCmd('underline')"><u>U</u></button>
+    <button onclick="execCmd('strikeThrough')"><s>S</s></button>
+    <button onclick="execCmd('insertUnorderedList')">&#8226; List</button>
+    <button onclick="execCmd('insertOrderedList')">1. List</button>
+    <button onclick="saveContent()">Save</button>
+  </div>
+  <div id="editor" class="editor" contenteditable="true" placeholder="Start typing here..."></div>
+</div>
+
+<script>
+  function execCmd(command) {
+    document.execCommand(command, false, null);
+  }
+
+  function saveContent() {
+    const content = document.getElementById("editor").innerHTML;
+    localStorage.setItem("savedContent", content);
+    alert("Content saved!");
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedContent = localStorage.getItem("savedContent");
+    if (savedContent) {
+      document.getElementById("editor").innerHTML = savedContent;
+    }
+  });
+</script>
+
+</body>
+</html>
